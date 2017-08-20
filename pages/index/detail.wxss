@@ -1,0 +1,77 @@
+/* detail.wxss */
+
+page{
+  height: 100%;
+  width: 100%;
+  background: red;
+
+  display: flex;
+  flex-direction: column; /*主轴方向*/
+  /*justify-content: flex-start;/*主轴上的对齐方式*/
+  /*align-items: stretch;/*交叉轴上的对齐方式*/
+}
+
+
+  /**/
+  /**/
+  /**/
+/*}*/
+
+.dbody{
+  order: 0;
+  flex: 1 1 auto;
+
+  height: 95%;
+  background: yellow;
+
+  /*children*/
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  /*background: #f8f8f8;*/
+
+}
+.dtitle{
+  /*layout*/
+  order: 0;
+  flex: 0 1 auto; /*flex-grow, flex-shrink 和 flex-basis*/
+  height: 10%;
+  width:95%;
+
+  /*border*/
+  background: pink;
+  border: 5rpx solid #ccc;
+  border-radius: 5px; 
+
+  /*content style*/
+  display: flex;
+  align-items: center;
+
+}
+.ddetail{
+  /*layout*/
+  order: 1;
+  flex: 0 1 auto;
+  height: 80%;
+  width: 95%;
+  /*background: #f8f8f8;*/
+  background: blue;
+
+  /*border*/
+  border: 5rpx solid #ccc;
+  border-radius: 5px; 
+
+  /*content style*/
+  display: flex;
+  align-items: center;
+
+}
+
+.dfooter{
+  order: 1;
+  flex: 0 0 auto;
+  background: pink;
+
+  height: 5%;
+}

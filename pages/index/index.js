@@ -2,15 +2,16 @@
 //获取应用实例
 var app = getApp()
 var color = "Cwindow";
-var blogurl = "http://www.batigoal.cn/blog/wp-json/wp/v2/posts"
+var blogurl = "http://www.batigoal.cn/blog/wp-json/wp/v2/posts?per_page=1"
 Page({
   data: {
     //初始化数据，作为第一次渲染，但是变量并不赋值
     motto: 'Hello World',
     userInfo: {},
     color:"Cwindow", 
-    list: [],
+    list: app.globalData.globallist,
   },
+
   clickChange:function(){
     console.log("click the words!");
     console.log(color);
@@ -35,6 +36,16 @@ Page({
     var reTag = /<(?:.|\s)*?>/g
     return str.replace(reTag, "")//去掉所有的html标记
   }, */
+  
+  tapTitle: function (event) {
+    console.log('tapTitle to details...')
+    console.log(event)    
+    wx.navigateTo({
+      url: 'detail?id=' + event.currentTarget.id
+    })
+  },
+
+  /*------------------------------------------*/
   onLoad: function () {
     console.log('onLoad')
     var that = this
@@ -67,6 +78,7 @@ Page({
       res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/<[^>]+>/g, "")
       res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/\[.+\]/g, "[...]")
       res.data[i].content.rendered = res.data[i].content.rendered.replace(/<[^>]+>/g, "")
+      //res.data[i].content.rendered = res.data[i].content.rendered.replace(/<(img|IMG)[^\<\>]*>/g, "")
 
       console.log(res.data[i].title.rendered)
       console.log(res.data[i].excerpt.rendered)
@@ -74,9 +86,11 @@ Page({
       console.log(res.data[i].link)
     }
     //console.log(items)
+    app.globalData.globallist = res.data
     that.setData({
-      list: res.data
+      list: app.globalData.globallist
     })
+    console.log(app.globalData.globallist)
   },
   complete: function() {
     console.log("request done")
