@@ -2,7 +2,9 @@
 <!--<text>detail.wxml</text>-->
   <view class="dbody">
     <view class="dtitle">{{article.title.rendered}}</view>
-    <scroll-view class="ddetail">{{article.content.rendered}}</scroll-view>
+    <scroll-view class="ddetail" scroll-y="true">{{article.content.rendered}}
+    
+    </scroll-view>
     <!--<rich-text class="ddetail" nodes="article.content.rendered}}">
     </rich-text>-->
   </view>

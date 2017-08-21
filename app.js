@@ -29,3 +29,9 @@ App({
     globallist: [],
   }
 })
+
+/*
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/index/detail",
+*/

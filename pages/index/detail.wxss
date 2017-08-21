@@ -3,7 +3,8 @@
 page{
   height: 100%;
   width: 100%;
-  background: red;
+  background: #fff;
+  /*background: red;*/
 
   display: flex;
   flex-direction: column; /*主轴方向*/
@@ -22,7 +23,9 @@ page{
   flex: 1 1 auto;
 
   height: 95%;
-  background: yellow;
+  background: #f8f8f8;
+  /*background: yellow;*/
+
 
   /*children*/
   display: flex;
@@ -36,17 +39,22 @@ page{
   /*layout*/
   order: 0;
   flex: 0 1 auto; /*flex-grow, flex-shrink 和 flex-basis*/
-  height: 10%;
+  height: 15%;
   width:95%;
 
   /*border*/
-  background: pink;
-  border: 5rpx solid #ccc;
-  border-radius: 5px; 
+  background: #fff;  
+  /*background: pink;*/
+  border: 5rpx solid #f8f8f8;
+  border-radius: 10px; 
 
   /*content style*/
   display: flex;
   align-items: center;
+
+  font-size:14px;
+  color:#999;
+  font-weight:400;
 
 }
 .ddetail{
@@ -56,22 +64,35 @@ page{
   height: 80%;
   width: 95%;
   /*background: #f8f8f8;*/
-  background: blue;
+  background: #fff;
+  /*background: blue;*/
 
   /*border*/
-  border: 5rpx solid #ccc;
-  border-radius: 5px; 
+  border: 5rpx solid #f8f8f8;
+  border-radius: 10px; 
 
   /*content style*/
   display: flex;
   align-items: center;
+
+  font-size:16px;
+  line-height:2em;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 }
 
 .dfooter{
   order: 1;
   flex: 0 0 auto;
-  background: pink;
+  background: #f8f8f8;
+  /*background: pink;*/
 
   height: 5%;
+}
+
+/*隐藏滚动条*/
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
 }
