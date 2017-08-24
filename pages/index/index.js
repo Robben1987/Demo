@@ -2,30 +2,15 @@
 //获取应用实例
 var app = getApp()
 var color = "Cwindow";
-var blogurl = "http://www.batigoal.cn/blog/wp-json/wp/v2/posts?per_page=1"
+var blogurl = "http://www.batigoal.cn/blog/wp-json/wp/v2/posts"
 Page({
   data: {
     //初始化数据，作为第一次渲染，但是变量并不赋值
     motto: 'Hello World',
     userInfo: {},
-    color:"Cwindow", 
     list: app.globalData.globallist,
   },
 
-  clickChange:function(){
-    console.log("click the words!");
-    console.log(color);
-    
-    if(color == "Cwindow")
-    {
-      color = "Dwindow";//yellow
-      console.log(color);
-    }else if(color == "Dwindow"){
-      color = "Cwindow";
-      console.log(color);
-    }
-    this.setData({color});
-  },
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
@@ -90,7 +75,7 @@ Page({
     that.setData({
       list: app.globalData.globallist
     })
-    console.log(app.globalData.globallist)
+    //console.log(app.globalData.globallist)
   },
   complete: function() {
     console.log("request done")
@@ -126,4 +111,38 @@ Page({
    // return custom share data when user share.
    console.log('onShareAppMessage');
   },
+
+  onPullDownRefresh: function () {
+    console.log('Pull Down 1')
+
+    wx.startPullDownRefresh({
+      success: function(){
+        wx.showLoading({
+          title: '加载中',
+        })
+      }
+    })
+    //do 
+    console.log('Pull Down 2')
+
+
+    wx.stopPullDownRefresh({
+      success: function () {
+        //wx.hideLoading()
+      }
+    })
+
+    console.log('Pull Down 3')
+
+  }
 })
+
+/*
+wx.showLoading({
+  title: '加载中',
+})
+
+setTimeout(function () {
+  wx.hideLoading()
+}, 2000)
+*/
