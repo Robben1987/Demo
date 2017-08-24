@@ -43,7 +43,9 @@ page{
   width:95%;
 
   /*border*/
-  background: #fff;  
+  background: #f8f8f8; 
+  /*background: #fff; */ 
+   
   /*background: pink;*/
   border: 5rpx solid #f8f8f8;
   border-radius: 10px; 
@@ -52,8 +54,8 @@ page{
   display: flex;
   align-items: center;
 
-  font-size:14px;
-  color:#999;
+  font-size:20px;
+  line-height:2em;
   font-weight:400;
 
 }
@@ -61,7 +63,7 @@ page{
   /*layout*/
   order: 1;
   flex: 0 1 auto;
-  height: 80%;
+  height: 85%;
   width: 95%;
   /*background: #f8f8f8;*/
   background: #fff;
@@ -70,6 +72,7 @@ page{
   /*border*/
   border: 5rpx solid #f8f8f8;
   border-radius: 10px; 
+
 
   /*content style*/
   display: flex;

@@ -9,4 +9,4 @@
     </rich-text>-->
   </view>
 
-  <view class="dfooter">footer</view>
+  <view class="dfooter">{{article.date}}</view>
