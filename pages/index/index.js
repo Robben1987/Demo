@@ -1,33 +1,15 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var color = "Cwindow";
+var color = "Cwindow"
 var blogurl = "http://www.batigoal.cn/blog/wp-json/wp/v2/posts"
+var allRefresh = true
 Page({
   data: {
-    //初始化数据，作为第一次渲染，但是变量并不赋值
-    motto: 'Hello World',
     userInfo: {},
     list: app.globalData.globallist,
-  },
-
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  /*delHtmlTag:function () {
-    var reTag = /<(?:.|\s)*?>/g
-    return str.replace(reTag, "")//去掉所有的html标记
-  }, */
-  
-  tapTitle: function (event) {
-    console.log('tapTitle to details...')
-    console.log(event)    
-    wx.navigateTo({
-      url: 'detail?id=' + event.currentTarget.id
-    })
+    perPage: 5,
+    pageIndex: 1,
   },
 
   /*------------------------------------------*/
@@ -41,47 +23,12 @@ Page({
         userInfo:userInfo
       })
     })
-  
-  // get request
-  wx.request({
-  url: blogurl,
-  /*data:{
-    per_page:1
-  },*/
-  success: function(res) {
-    console.log(res)
-    console.log(res.data)
-    var items = []
-    for (var i=0;i<res.data.length;i++)
-    {
-      console.log(res.data[i].title.rendered)
-      console.log(res.data[i].excerpt.rendered)
-      console.log(res.data[i].content.rendered)
-      console.log(res.data[i].link)
-      //items.push(res.data[i].content.rendered.replace(/<[^>]+>/g, ""))
-
-      res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/<[^>]+>/g, "")
-      res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/\[.+\]/g, "[...]")
-      res.data[i].content.rendered = res.data[i].content.rendered.replace(/<[^>]+>/g, "")
-      //res.data[i].content.rendered = res.data[i].content.rendered.replace(/<(img|IMG)[^\<\>]*>/g, "")
-
-      console.log(res.data[i].title.rendered)
-      console.log(res.data[i].excerpt.rendered)
-      console.log(res.data[i].content.rendered)
-      console.log(res.data[i].link)
+    if(allRefresh){
+      //this.getRequest(this.data.pageIndex, true)
+      this.pullDown()
+      allRefresh = false
+      console.log('retrive all the list');
     }
-    //console.log(items)
-    app.globalData.globallist = res.data
-    that.setData({
-      list: app.globalData.globallist
-    })
-    //console.log(app.globalData.globallist)
-  },
-  complete: function() {
-    console.log("request done")
-  },
-  })
-
   },
   onReady: function() {
     // Do something when page ready.
@@ -99,42 +46,120 @@ Page({
     // Do something when page close.
     console.log('onUnload');
   },
-  onPullDownRefresh: function() {
-    // Do something when pull down.
-    console.log('onPullDownRefresh');
-  },
-  onReachBottom: function() {
-    // Do something when page reach bottom.
-    console.log('onReachBottom');
-  },
   onShareAppMessage: function () {
    // return custom share data when user share.
    console.log('onShareAppMessage');
   },
-
   onPullDownRefresh: function () {
     console.log('Pull Down 1')
-
-    wx.startPullDownRefresh({
-      success: function(){
-        wx.showLoading({
-          title: '加载中',
-        })
-      }
-    })
     //do 
-    console.log('Pull Down 2')
-
-
-    wx.stopPullDownRefresh({
-      success: function () {
-        //wx.hideLoading()
-      }
-    })
-
+    this.pullDown()
+    wx.stopPullDownRefresh()
     console.log('Pull Down 3')
 
-  }
+  },
+  onReachBottom: function () {
+    console.log('Pull Up 1')
+    //do 
+    this.pullUp()
+    wx.stopPullDownRefresh()
+    console.log('Pull Up 3')
+  },
+  
+  /*------------------------------------------*/
+  // get request
+  getRequest:function(para,rebuild){
+    var that = this
+
+    wx.request({
+      url: blogurl,
+      data:{per_page:this.data.perPage.toString(),page:para.toString()},
+      success: function (res) {
+        console.log(res)
+        
+        if(rebuild)
+           app.globalData.globallist.splice(0, app.globalData.globallist.length)
+        if(res.statusCode == 200){   
+          for (var i = 0; i < res.data.length; i++) {
+            /*console.log(res.data[i].title.rendered)
+            console.log(res.data[i].excerpt.rendered)
+            console.log(res.data[i].content.rendered)
+            console.log(res.data[i].link)*/
+
+            res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/<[^>]+>/g, "")
+            res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/\[.+\]/g, "[...]")
+            res.data[i].content.rendered = res.data[i].content.rendered.replace(/<[^>]+>/g, "")
+            //res.data[i].content.rendered = res.data[i].content.rendered.replace(/<(img|IMG)[^\<\>]*>/g, "")
+
+            /*console.log(res.data[i].title.rendered)
+            console.log(res.data[i].excerpt.rendered)
+            console.log(res.data[i].content.rendered)
+            console.log(res.data[i].link)*/
+            
+            app.globalData.globallist.push(res.data[i])
+          }
+          //app.globalData.globallist = res.data
+          console.log("pageIndex " + that.data.pageIndex)
+          that.setData({
+            list: app.globalData.globallist,
+            pageIndex: para + 1
+          })
+          console.log("request succ")
+        }else{
+          console.log("request code " + res.statusCode)//400
+          //
+          that.setData({
+            pageIndex: 0xffffffff
+          })
+        }
+        //console.log(app.globalData.globallist)
+      },
+      fail: function () {
+        console.log("request fail")
+        
+      },
+      complete: function () {
+        console.log("request done")
+        wx.hideLoading()
+      },
+    })
+  },
+  /* */
+  bindViewTap: function () {
+    wx.navigateTo({
+      url: '../logs/logs'
+    })
+  },
+  /*delHtmlTag:function () {
+    var reTag = /<(?:.|\s)*?>/g
+    return str.replace(reTag, "")//去掉所有的html标记
+  }, */
+  /* */
+  tapTitle: function (event) {
+    console.log('tapTitle to details...')
+    console.log(event)
+    wx.navigateTo({
+      url: 'detail?id=' + event.currentTarget.id
+    })
+  },
+
+  pullDown:function(){
+    wx.showLoading({ title: '玩命加载中...'},)
+    this.setData({
+      pageIndex: 1
+    })
+    this.getRequest(this.data.pageIndex, true)
+  },
+  pullUp: function () {
+    if(this.data.pageIndex != 0xffffffff) {
+      wx.showLoading({ title: '玩命加载中...' }, )
+      this.getRequest(this.data.pageIndex, false)
+    }else
+    {
+      wx.showToast({ title: '到底了, 亲 !'})
+      console.log('the blog end...')  
+    }
+  },
 })
 
 /*
