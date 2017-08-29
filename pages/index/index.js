@@ -6,6 +6,7 @@ var blogurl = "http://www.batigoal.cn/blog/wp-json/wp/v2/posts"
 var allRefresh = true
 Page({
   data: {
+    sysInfo: {},
     userInfo: {},
     list: app.globalData.globallist,
     perPage: 5,
@@ -32,6 +33,11 @@ Page({
   },
   onReady: function() {
     // Do something when page ready.
+    var res = wx.getSystemInfoSync()
+    this.setData({
+      sysInfo: res
+    })
+    console.log(res)
     console.log('onReady');
   },
   onShow: function() {

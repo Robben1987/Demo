@@ -1,49 +1,29 @@
 /**index.wxss**/
-
-/*
-.userinfo {
+page{
+  height: 100%;
+  width: 100%;
+  background: #f8f8f8;
+}
+.box{
+  width:100%;
+  height:100%;
+  background: #f8f8f8;
+  
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #aaa;
-}
-
-.usermotto {
-  margin-top: 50px;
-}
-.Cwindow{
-  color:red;
-}
-.Dwindow{
-  color:yellow;
-}
-*/
-.body{
-  text-align: center;
+  justify-content: flex-start;
 }
 .title{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
 }
 .item{
-  width: 90%;
-  height: 60px;
-  margin: 5px;
-  text-align: left;
-  background: #f8f8f8;
-  display: block;
-  padding: 10px 10px;
-  border:1px solid #ccc;
+  padding: 5px;
+  margin: 5px 15px;
+  background: white;
+  border: 1px solid #ccc;
   border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
