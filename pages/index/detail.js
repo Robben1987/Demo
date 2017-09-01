@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    article: null,
+    article: {},
   },
 
   /**
@@ -69,7 +69,25 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-  
+  onShareAppMessage: function (res) {
+
+    console.log('onShareAppMessage')
+    console.log(res)
+    console.log(this.data.article)
+
+    return {
+      title: this.data.article.title.rendered,
+      path: '/pages/index/detail?id=' + this.data.article.id,
+      success: function (res) {
+        // 转发成功
+        wx.showToast({ title: '分享已成功 !' })
+        console.log('share succ')
+      },
+      fail: function (res) {
+        // 转发失败
+        wx.showToast({ title: '分享失败 !' })
+        console.log('share fail')
+      }
+    }
   }
 })
