@@ -2,7 +2,7 @@
 //获取应用实例
 var app = getApp()
 var color = "Cwindow"
-var blogurl = "http://www.batigoal.cn/blog/wp-json/wp/v2/posts"
+var blogurl = "https://www.batigoal.cn/blog/wp-json/wp/v2/posts"
 var allRefresh = true
 Page({
   data: {
@@ -83,8 +83,10 @@ Page({
       success: function (res) {
         console.log(res)
         
-        if(rebuild)
-           app.globalData.globallist.splice(0, app.globalData.globallist.length)
+        if(rebuild){
+          //app.globalData.globallist.splice(0, app.globalData.globallist.length)
+          app.globalData.globallist.length = 0
+        }
         if(res.statusCode == 200){   
           for (var i = 0; i < res.data.length; i++) {
             /*console.log(res.data[i].title.rendered)
@@ -150,7 +152,7 @@ Page({
   },
 
   pullDown:function(){
-    wx.showLoading({ title: '玩命加载中...'},)
+    wx.showLoading({ title: '玩命下拉中...'},)
     this.setData({
       pageIndex: 1
     })
