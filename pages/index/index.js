@@ -2,7 +2,7 @@
 //获取应用实例
 var app = getApp()
 var color = "Cwindow"
-var blogurl = "http://www.batigoal.cn/blog/wp-json/wp/v2/posts"
+var blogurl = "https://www.batigoal.cn/blog/wp-json/wp/v2/posts"
 var allRefresh = true
 Page({
   data: {
@@ -83,8 +83,17 @@ Page({
       success: function (res) {
         console.log(res)
         
-        if(rebuild)
-           app.globalData.globallist.splice(0, app.globalData.globallist.length)
+        if(rebuild){
+          console.log('rebuild 1')
+          console.log(app.globalData.globallist)
+          var len = app.globalData.globallist.length
+          app.globalData.globallist.splice(0, len)
+          //app.globalData.globallist = []
+          console.log(app.globalData.globallist)
+          console.log('rebuild 2')
+
+        }
+
         if(res.statusCode == 200){   
           for (var i = 0; i < res.data.length; i++) {
             /*console.log(res.data[i].title.rendered)
@@ -93,7 +102,7 @@ Page({
             console.log(res.data[i].link)*/
 
             res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/<[^>]+>/g, "")
-            res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/\[.+\]/g, "[...]")
+            //res.data[i].excerpt.rendered = res.data[i].excerpt.rendered.replace(/\[.+\]/g, "[...]")
             res.data[i].content.rendered = res.data[i].content.rendered.replace(/<[^>]+>/g, "")
             //res.data[i].content.rendered = res.data[i].content.rendered.replace(/<(img|IMG)[^\<\>]*>/g, "")
 
