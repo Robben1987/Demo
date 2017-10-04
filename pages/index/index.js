@@ -84,16 +84,9 @@ Page({
         console.log(res)
         
         if(rebuild){
-          console.log('rebuild 1')
-          console.log(app.globalData.globallist)
-          var len = app.globalData.globallist.length
-          app.globalData.globallist.splice(0, len)
-          //app.globalData.globallist = []
-          console.log(app.globalData.globallist)
-          console.log('rebuild 2')
-
+          app.globalData.globallist.length = 0
         }
-
+        
         if(res.statusCode == 200){   
           for (var i = 0; i < res.data.length; i++) {
             /*console.log(res.data[i].title.rendered)
@@ -159,7 +152,7 @@ Page({
   },
 
   pullDown:function(){
-    wx.showLoading({ title: '玩命加载中...'},)
+    wx.showLoading({ title: '玩命下拉中...'},)
     this.setData({
       pageIndex: 1
     })

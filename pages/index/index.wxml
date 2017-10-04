@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="box">
   <view class="title">today</view>
-  <view class="view-list" style="" wx:for="{{list}}" wx:key="*this">
+  <view class="view-list" style="" wx:for="{{list}}" wx:key="id">
     <view id="{{index}}" class="item" bindtap="tapTitle" style="width:{{sysInfo.windowWidth-40}}px;height:{{sysInfo.windowHeight/10}}px;">
       <text style="">{{item.title.rendered}}</text>
     </view>
